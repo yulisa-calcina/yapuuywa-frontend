@@ -67,12 +67,12 @@ export default function Login() {
 
   const inputStyle = {
     width: '100%',
-    padding: '12px 16px',
-    border: '1.5px solid rgba(255,255,255,0.3)',
-    borderRadius: 10,
-    fontSize: 14,
-    color: '#1a3a1a',
-    background: 'rgba(255,255,255,0.7)',
+    padding: '11px 14px',
+    border: '1px solid #2d5a2d',
+    borderRadius: 8,
+    fontSize: 13,
+    color: '#8aaa8a',
+    background: '#0a1f0a',
     outline: 'none',
     boxSizing: 'border-box',
     fontFamily: 'inherit',
@@ -80,282 +80,311 @@ export default function Login() {
 
   const labelStyle = {
     display: 'block',
-    fontSize: 11,
-    fontWeight: 600,
-    color: '#1a4a1a',
+    fontSize: 10,
+    color: '#5a8a5a',
     marginBottom: 6,
     textTransform: 'uppercase',
     letterSpacing: '0.08em',
+    fontWeight: 600,
   }
 
   return (
     <div style={{
       minHeight: '100vh',
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      fontFamily: "'Segoe UI', sans-serif",
       position: 'relative',
       overflow: 'hidden',
-      fontFamily: "'Segoe UI', sans-serif",
     }}>
-      {/* FONDO DIVIDIDO */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        display: 'grid', gridTemplateColumns: '1fr 1fr',
-      }}>
-        {/* Mitad ganado */}
-        <div style={{
-          background: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=960&q=80')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}/>
-        {/* Mitad cultivos */}
-        <div style={{
-          background: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=960&q=80')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}/>
-      </div>
-
-      {/* LÍNEA DIVISORIA CENTRAL */}
+      {/* FONDO IZQUIERDO — GANADO */}
       <div style={{
         position: 'absolute',
-        top: 0, bottom: 0,
-        left: '50%',
-        width: 3,
-        background: 'linear-gradient(180deg, transparent, #f0c040, #2d7a40, #f0c040, transparent)',
-        transform: 'translateX(-50%)',
-        zIndex: 1,
+        top: 0, left: 0,
+        width: '50%', height: '100%',
+        background: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=960&q=80')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}/>
 
-      {/* TARJETA LOGIN */}
+      {/* FONDO DERECHO — CULTIVOS */}
+      <div style={{
+        position: 'absolute',
+        top: 0, right: 0,
+        width: '50%', height: '100%',
+        background: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=960&q=80')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}/>
+
+      {/* OVERLAY VERDE OSCURO */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'rgba(5,20,5,0.3)',
+      }}/>
+
+      {/* CONTENIDO PRINCIPAL */}
       <div style={{
         position: 'relative',
         zIndex: 2,
-        background: 'rgba(210, 240, 215, 0.92)',
-        backdropFilter: 'blur(12px)',
-        borderRadius: 24,
-        padding: '40px 40px',
         width: '100%',
-        maxWidth: 480,
-        boxShadow: '0 30px 80px rgba(0,0,0,0.5)',
-        border: '1.5px solid rgba(255,255,255,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        padding: 20,
+        boxSizing: 'border-box',
       }}>
-
-        {/* LOGO */}
-        <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <img src="/logo.png" alt="YapuUywa"
-            style={{ width: 100, height: 100, objectFit: 'contain', borderRadius: 20,
-              boxShadow: '0 8px 20px rgba(0,0,0,0.2)' }}/>
-        </div>
-
-        {/* TÍTULO 3D GRANDE */}
-        <div style={{ textAlign: 'center', marginBottom: 6 }}>
-          <div style={{
-            fontSize: 42,
-            fontWeight: 800,
-            fontFamily: "'Sora', 'Segoe UI', sans-serif",
-            color: '#0d3318',
-            textShadow: '2px 2px 0px #2d7a40, 4px 4px 0px rgba(45,122,64,0.5), 6px 6px 0px rgba(45,122,64,0.2)',
-            lineHeight: 1.1,
-            letterSpacing: '-1px',
-          }}>
-            YapuUywa
-          </div>
-          <div style={{
-            fontSize: 16,
-            fontWeight: 700,
-            color: '#1a5c2a',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginTop: 4,
-          }}>
-            SGA
-          </div>
-          <div style={{
-            fontSize: 12,
-            color: '#2d5a2d',
-            marginTop: 4,
-            letterSpacing: '0.05em',
-          }}>
-            Sistema de Gestión Agropecuaria
-          </div>
-          <div style={{
-            width: 60, height: 3,
-            background: 'linear-gradient(90deg, #2d7a40, #c8a030)',
-            margin: '10px auto 0',
-            borderRadius: 2,
-          }}/>
-        </div>
-
-        {/* SUBTÍTULO */}
-        <div style={{ textAlign: 'center', fontSize: 12, color: '#3a5a3a', marginBottom: 24 }}>
-          Por favor ingrese sus credenciales
-        </div>
-
-        {/* TABS */}
         <div style={{
           display: 'flex',
-          background: 'rgba(255,255,255,0.4)',
-          borderRadius: 12,
-          padding: 4,
-          marginBottom: 24,
-          border: '1px solid rgba(255,255,255,0.5)',
+          width: '100%',
+          maxWidth: 860,
+          minHeight: 520,
+          borderRadius: 24,
+          overflow: 'hidden',
+          boxShadow: '0 40px 100px rgba(0,0,0,0.7)',
+          border: '1px solid rgba(45,90,45,0.4)',
         }}>
-          {['login', 'register'].map(m => (
-            <button key={m} onClick={() => setModo(m)} style={{
-              flex: 1,
-              padding: '10px',
-              borderRadius: 9,
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: 13,
-              transition: 'all .2s',
-              fontFamily: 'inherit',
-              background: modo === m ? '#1a5c2a' : 'transparent',
-              color: modo === m ? '#fff' : '#2d5a2d',
-              boxShadow: modo === m ? '0 3px 8px rgba(0,0,0,0.2)' : 'none',
+
+          {/* PANEL IZQUIERDO — MARCA */}
+          <div style={{
+            flex: 1,
+            background: 'rgba(10,31,10,0.92)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '48px 40px',
+            borderRight: '1px solid #1a3a1a',
+          }}>
+            {/* Logo */}
+            <img src="/logo.png" alt="YapuUywa"
+              style={{ width: 110, height: 110, objectFit: 'contain', borderRadius: 22, marginBottom: 20,
+                boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}/>
+
+            {/* Título 3D dorado */}
+            <div style={{
+              fontSize: 48,
+              fontWeight: 800,
+              color: '#c8a030',
+              textShadow: '2px 2px 0 #6b5010, 4px 4px 0 rgba(107,80,16,0.5), 6px 6px 0 rgba(107,80,16,0.2)',
+              letterSpacing: '-2px',
+              lineHeight: 1,
+              textAlign: 'center',
+              marginBottom: 6,
             }}>
-              {m === 'login' ? 'Ingresar' : 'Crear cuenta'}
-            </button>
-          ))}
+              YapuUywa
+            </div>
+            <div style={{
+              fontSize: 14,
+              fontWeight: 700,
+              color: '#e8c84a',
+              letterSpacing: '0.35em',
+              textTransform: 'uppercase',
+              marginBottom: 8,
+            }}>
+              SGA
+            </div>
+            <div style={{
+              width: 50, height: 2,
+              background: '#c8a030',
+              borderRadius: 1,
+              marginBottom: 16,
+            }}/>
+            <div style={{
+              fontSize: 11,
+              color: '#4a6a4a',
+              textAlign: 'center',
+              lineHeight: 1.7,
+            }}>
+              Sistema de Gestión Agropecuaria<br/>
+              Puno · Perú
+            </div>
+
+            {/* Iconos módulos */}
+            <div style={{ display: 'flex', gap: 12, marginTop: 28 }}>
+              {[['🐄','Ganadería'],['🌾','Cultivos'],['📊','Gestión']].map(([ico, lbl]) => (
+                <div key={lbl} style={{
+                  background: '#0d3318',
+                  border: '1px solid #2d5a2d',
+                  borderRadius: 10,
+                  padding: '10px 14px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{ fontSize: 20 }}>{ico}</div>
+                  <div style={{ fontSize: 9, color: '#4a6a4a', marginTop: 4, letterSpacing: '0.05em' }}>{lbl}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* PANEL DERECHO — FORMULARIO */}
+          <div style={{
+            width: 320,
+            background: 'rgba(17,31,17,0.95)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            padding: '40px 32px',
+          }}>
+            {/* Tabs */}
+            <div style={{
+              display: 'flex',
+              background: 'rgba(255,255,255,0.05)',
+              borderRadius: 10,
+              padding: 3,
+              marginBottom: 28,
+              border: '1px solid #1a3a1a',
+            }}>
+              {['login','register'].map(m => (
+                <button key={m} onClick={() => setModo(m)} style={{
+                  flex: 1,
+                  padding: '9px',
+                  borderRadius: 8,
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: 12,
+                  fontFamily: 'inherit',
+                  transition: 'all .2s',
+                  background: modo === m ? '#c8a030' : 'transparent',
+                  color: modo === m ? '#1a0e00' : '#4a6a4a',
+                }}>
+                  {m === 'login' ? 'Ingresar' : 'Crear cuenta'}
+                </button>
+              ))}
+            </div>
+
+            {modo === 'login' ? (
+              <>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#c8a030', marginBottom: 4 }}>
+                  Bienvenido
+                </div>
+                <div style={{ fontSize: 11, color: '#4a6a4a', marginBottom: 24 }}>
+                  Ingresa tus credenciales de acceso
+                </div>
+
+                {error && (
+                  <div style={{
+                    background: 'rgba(139,26,36,0.15)',
+                    color: '#f08090',
+                    border: '1px solid rgba(139,26,36,0.3)',
+                    borderRadius: 8,
+                    padding: '9px 13px',
+                    fontSize: 12,
+                    marginBottom: 16,
+                  }}>
+                    ⚠️ {error}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit}>
+                  <div style={{ marginBottom: 14 }}>
+                    <label style={labelStyle}>Número de DNI</label>
+                    <input style={inputStyle} type="text"
+                      placeholder="8 dígitos" maxLength={8} inputMode="numeric"
+                      value={dni} onChange={e => setDni(e.target.value.replace(/\D/g,''))}
+                      disabled={blocked}/>
+                  </div>
+                  <div style={{ marginBottom: 22 }}>
+                    <label style={labelStyle}>Contraseña</label>
+                    <input style={inputStyle} type="password"
+                      placeholder="Mínimo 8 caracteres"
+                      value={pass} onChange={e => setPass(e.target.value)}
+                      disabled={blocked}/>
+                  </div>
+                  <button type="submit" disabled={loading || blocked} style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: '#c8a030',
+                    color: '#1a0e00',
+                    border: 'none',
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                    boxShadow: '3px 3px 0 #6b5010',
+                    opacity: loading || blocked ? 0.6 : 1,
+                  }}>
+                    {loading ? 'Verificando...' : 'Ingresar al sistema →'}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#c8a030', marginBottom: 4 }}>
+                  Crear cuenta
+                </div>
+                <div style={{ fontSize: 11, color: '#4a6a4a', marginBottom: 20 }}>
+                  Regístrate para usar YapuUywa
+                </div>
+
+                {regError && (
+                  <div style={{
+                    background: 'rgba(139,26,36,0.15)',
+                    color: '#f08090',
+                    border: '1px solid rgba(139,26,36,0.3)',
+                    borderRadius: 8,
+                    padding: '9px 13px',
+                    fontSize: 12,
+                    marginBottom: 14,
+                  }}>
+                    ⚠️ {regError}
+                  </div>
+                )}
+
+                <form onSubmit={handleRegister}>
+                  <div style={{ marginBottom: 12 }}>
+                    <label style={labelStyle}>Nombre completo</label>
+                    <input style={inputStyle} type="text" placeholder="Ej: Juan Mamani"
+                      value={regForm.nombre} onChange={setRegField('nombre')} required/>
+                  </div>
+                  <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:12 }}>
+                    <div>
+                      <label style={labelStyle}>DNI</label>
+                      <input style={inputStyle} type="text" placeholder="8 dígitos" maxLength={8}
+                        value={regForm.dni} onChange={setRegField('dni')} required/>
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Rol</label>
+                      <select style={{...inputStyle, background:'#0a1f0a'}}
+                        value={regForm.rol} onChange={setRegField('rol')} required>
+                        <option value="ganadero">Ganadero</option>
+                        <option value="veterinario">Veterinario</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: 12 }}>
+                    <label style={labelStyle}>Contraseña</label>
+                    <input style={inputStyle} type="password" placeholder="Mínimo 8 caracteres"
+                      value={regForm.password} onChange={setRegField('password')} required/>
+                  </div>
+                  <div style={{ marginBottom: 20 }}>
+                    <label style={labelStyle}>Confirmar contraseña</label>
+                    <input style={inputStyle} type="password" placeholder="Repite la contraseña"
+                      value={regForm.password_confirmation} onChange={setRegField('password_confirmation')} required/>
+                  </div>
+                  <button type="submit" disabled={regLoading} style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: '#c8a030',
+                    color: '#1a0e00',
+                    border: 'none',
+                    borderRadius: 8,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                    boxShadow: '3px 3px 0 #6b5010',
+                    opacity: regLoading ? 0.6 : 1,
+                  }}>
+                    {regLoading ? 'Creando...' : 'Crear mi cuenta →'}
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
         </div>
-
-        {modo === 'login' ? (
-          <>
-            {error && (
-              <div style={{
-                background: 'rgba(139,26,36,0.1)',
-                color: '#6b1020',
-                border: '1px solid rgba(139,26,36,0.3)',
-                borderRadius: 10,
-                padding: '10px 14px',
-                fontSize: 12,
-                marginBottom: 16,
-                fontWeight: 500,
-              }}>
-                ⚠️ {error}
-              </div>
-            )}
-            <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: 16 }}>
-                <label style={labelStyle}>DNI *</label>
-                <input style={inputStyle} type="text"
-                  placeholder="Ingresa tus 8 dígitos"
-                  maxLength={8} inputMode="numeric"
-                  value={dni}
-                  onChange={e => setDni(e.target.value.replace(/\D/g, ''))}
-                  disabled={blocked}/>
-                <div style={{ fontSize: 10, color: '#4a7a4a', marginTop: 4 }}>
-                  Tu DNI es tu identificador de acceso
-                </div>
-              </div>
-              <div style={{ marginBottom: 24 }}>
-                <label style={labelStyle}>Contraseña *</label>
-                <input style={inputStyle} type="password"
-                  placeholder="Mínimo 8 caracteres"
-                  value={pass}
-                  onChange={e => setPass(e.target.value)}
-                  disabled={blocked}/>
-              </div>
-              <button type="submit" disabled={loading || blocked} style={{
-                width: '100%',
-                padding: '14px',
-                background: '#1a5c2a',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 12,
-                fontSize: 15,
-                fontWeight: 700,
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                boxShadow: '4px 4px 0px #0d3318',
-                opacity: loading || blocked ? 0.6 : 1,
-                letterSpacing: '0.03em',
-              }}>
-                {loading ? 'Verificando...' : '→ Ingresar al sistema'}
-              </button>
-            </form>
-          </>
-        ) : (
-          <>
-            {regError && (
-              <div style={{
-                background: 'rgba(139,26,36,0.1)',
-                color: '#6b1020',
-                border: '1px solid rgba(139,26,36,0.3)',
-                borderRadius: 10,
-                padding: '10px 14px',
-                fontSize: 12,
-                marginBottom: 16,
-                fontWeight: 500,
-              }}>
-                ⚠️ {regError}
-              </div>
-            )}
-            <form onSubmit={handleRegister}>
-              <div style={{ marginBottom: 14 }}>
-                <label style={labelStyle}>Nombre completo *</label>
-                <input style={inputStyle} type="text"
-                  placeholder="Ej: Juan Mamani"
-                  value={regForm.nombre}
-                  onChange={setRegField('nombre')} required/>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
-                <div>
-                  <label style={labelStyle}>DNI *</label>
-                  <input style={inputStyle} type="text"
-                    placeholder="8 dígitos" maxLength={8}
-                    value={regForm.dni}
-                    onChange={setRegField('dni')} required/>
-                </div>
-                <div>
-                  <label style={labelStyle}>Rol *</label>
-                  <select style={inputStyle} value={regForm.rol}
-                    onChange={setRegField('rol')} required>
-                    <option value="ganadero">Ganadero</option>
-                    <option value="veterinario">Veterinario</option>
-                  </select>
-                </div>
-              </div>
-              <div style={{ marginBottom: 14 }}>
-                <label style={labelStyle}>Contraseña *</label>
-                <input style={inputStyle} type="password"
-                  placeholder="Mínimo 8 caracteres"
-                  value={regForm.password}
-                  onChange={setRegField('password')} required/>
-              </div>
-              <div style={{ marginBottom: 24 }}>
-                <label style={labelStyle}>Confirmar contraseña *</label>
-                <input style={inputStyle} type="password"
-                  placeholder="Repite la contraseña"
-                  value={regForm.password_confirmation}
-                  onChange={setRegField('password_confirmation')} required/>
-              </div>
-              <button type="submit" disabled={regLoading} style={{
-                width: '100%',
-                padding: '14px',
-                background: '#1a5c2a',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 12,
-                fontSize: 15,
-                fontWeight: 700,
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                boxShadow: '4px 4px 0px #0d3318',
-                opacity: regLoading ? 0.6 : 1,
-              }}>
-                {regLoading ? 'Creando cuenta...' : '→ Crear mi cuenta'}
-              </button>
-            </form>
-          </>
-        )}
-
-        <p style={{ textAlign: 'center', fontSize: 10, color: '#4a6a4a', marginTop: 20, marginBottom: 0 }}>
-          YapuUywa SGA © 2026 · Puno, Perú
-        </p>
       </div>
     </div>
   )
