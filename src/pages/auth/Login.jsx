@@ -88,7 +88,7 @@ export default function Login() {
       fontFamily: "'Segoe UI', sans-serif",
       position: 'relative',
       overflow: 'hidden',
-      background: `url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1920&q=80')`,
+      background: `url('/fondo.png')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
