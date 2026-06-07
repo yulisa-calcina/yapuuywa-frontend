@@ -1,10 +1,13 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import apiClient from '../api/axiosConfig'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser]       = useState(null)
+  const [user, setUser]       = useState(() => {
+    const u = localStorage.getItem('user')
+    return u ? JSON.parse(u) : null
+  })
   const [token, setToken]     = useState(() => localStorage.getItem('token'))
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState(null)
@@ -16,6 +19,7 @@ export function AuthProvider({ children }) {
       const res = await apiClient.post('/login', { dni, password })
       const { access_token, user: userData } = res.data
       localStorage.setItem('token', access_token)
+      localStorage.setItem('user', JSON.stringify(userData))
       setToken(access_token)
       setUser(userData)
       return { success: true }
@@ -31,6 +35,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(async () => {
     try { await apiClient.post('/logout') } catch (_) {}
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setToken(null)
     setUser(null)
   }, [])
