@@ -42,7 +42,7 @@ const REPORTES = [
     info: 'Próximamente disponible.',
     endpoint: '/reportes/historial',
     filename: 'reporte-historial-yapuuywa.pdf',
-    proximamente: true,
+    proximamente: false,
   },
   {
     id: 'insumos',
@@ -52,7 +52,7 @@ const REPORTES = [
     info: 'Próximamente disponible.',
     endpoint: '/reportes/insumos',
     filename: 'reporte-insumos-yapuuywa.pdf',
-    proximamente: true,
+    proximamente: false,
   },
 ]
 
