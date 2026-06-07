@@ -11,7 +11,8 @@ import FinanzasPage  from './pages/finanzas/Finanzas'
 import UsuarioList   from './pages/usuarios/UsuarioList'
 import ReportesPage  from './pages/reportes/Reportes'
 import ParcelaList   from './pages/parcelas/ParcelaList'
-import { Cultivos, Produccion, Alertas } from './pages/Placeholders'
+import ProduccionPage from './pages/produccion/Produccion'
+import { Cultivos, Alertas } from './pages/Placeholders'
 
 function PrivateRoute({ children }) {
   const { isAuth } = useAuth()
@@ -30,7 +31,7 @@ function AppRoutes() {
         <Route path="cultivos"   element={<Cultivos />} />
         <Route path="parcelas"   element={<ParcelaList />} />
         <Route path="insumos"    element={<InsumoList />} />
-        <Route path="produccion" element={<Produccion />} />
+        <Route path="produccion" element={<ProduccionPage />} />
         <Route path="personal"   element={<PersonalList />} />
         <Route path="finanzas"   element={<FinanzasPage />} />
         <Route path="reportes"   element={<ReportesPage />} />
