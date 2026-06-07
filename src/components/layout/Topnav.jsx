@@ -2,11 +2,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const NAV_LINKS = [
-  { label:'Panel',       path:'/dashboard' },
-  { label:'Ganadería',   path:'/ganado'    },
-  { label:'Agricultura', path:'/cultivos'  },
-  { label:'Inventario',  path:'/insumos'   },
-  { label:'Reportes',    path:'/reportes'  },
+  { label:'Panel',       path:'/dashboard', icon:'🏠' },
+  { label:'Ganadería',   path:'/ganado',    icon:'🐄' },
+  { label:'Agricultura', path:'/cultivos',  icon:'🌾' },
+  { label:'Inventario',  path:'/insumos',   icon:'📦' },
+  { label:'Reportes',    path:'/reportes',  icon:'📊' },
 ]
 
 function initials(nombre='') {
@@ -68,7 +68,7 @@ export default function Topnav({ activePath, alertCount=0 }) {
             borderBottom: activePath?.startsWith(l.path) ? '2px solid #c8a030' : '2px solid transparent',
             transition: 'all .15s',
           }}>
-            {l.label}
+            <span style={{marginRight:5}}>{l.icon}</span>{l.label}
           </Link>
         ))}
       </div>
