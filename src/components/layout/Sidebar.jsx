@@ -1,70 +1,138 @@
-import { NavLink } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'
+import { useDashboard, useAlertas, useGanado } from '../../hooks/index'
+import { Badge, EmptyState } from '../../components/ui/index'
 
-const MENU = [
-  { section:'General', items:[
-    { label:'Dashboard',         path:'/dashboard',  icon:'⊞' },
-  ]},
-  { section:'Ganadería', items:[
-    { label:'Inventario ganado', path:'/ganado',     icon:'🐄', roles:['admin','ganadero'] },
-    { label:'Control sanitario', path:'/sanitario',  icon:'🩺', badge:'alertas' },
-    { label:'Producción',        path:'/produccion', icon:'🥛', roles:['admin','ganadero'] },
-  ]},
-  { section:'Agricultura', items:[
-    { label:'Parcelas',          path:'/parcelas',   icon:'📍', roles:['admin','ganadero'] },
-    { label:'Cultivos',          path:'/cultivos',   icon:'🌱', roles:['admin','ganadero'] },
-  ]},
-  { section:'Sistema', items:[
-    { label:'Insumos',           path:'/insumos',    icon:'📦', badge:'insumos' },
-    { label:'Personal',          path:'/personal',   icon:'👷', roles:['admin'] },
-    { label:'Finanzas',          path:'/finanzas',   icon:'💰', roles:['admin','ganadero'] },
-    { label:'Reportes PDF',      path:'/reportes',   icon:'📄' },
-    { label:'Usuarios',          path:'/usuarios',   icon:'👤', roles:['admin'] },
-  ]},
-]
-
-const S = {
-  sidebar:  { width:200, background:'#fff', borderRight:'1px solid #dde3dd', display:'flex', flexDirection:'column', flexShrink:0, padding:'10px 0', overflowY:'auto' },
-  section:  { padding:'10px 14px 3px', fontSize:9, fontWeight:700, color:'#8d9e8d', letterSpacing:'.1em', textTransform:'uppercase' },
-  item:     { display:'flex', alignItems:'center', gap:8, padding:'8px 10px', margin:'1px 6px', borderRadius:10, fontSize:12, fontWeight:500, color:'#4a5e4a', transition:'all .12s', textDecoration:'none' },
-  itemHov:  { background:'#eef1ee', color:'#1e2e1e' },
-  itemAct:  { background:'#eef7f0', color:'#1a5c2a', borderRight:'2px solid #2d7a40' },
-  icon:     { fontSize:14, flexShrink:0 },
-  label:    { flex:1 },
-  badge:    { marginLeft:'auto', background:'#fde8ea', color:'#8b1a24', fontSize:10, fontWeight:700, padding:'1px 6px', borderRadius:20, minWidth:18, textAlign:'center' },
-  badgeWarn:{ background:'#fef3dc', color:'#7a4f08' },
+const FOTOS = {
+  ganado:   'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&q=70',
+  cultivos: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400&q=70',
+  alertas:  'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400&q=70',
+  finanzas: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&q=70',
 }
 
-export default function Sidebar({ badges={} }) {
-  const { user } = useAuth()
-  const rol = user?.rol || 'ganadero'
+function KpiCard({ foto, icon, label, val, sub, color }) {
+  return (
+    <div style={{
+      borderRadius: 16,
+      overflow: 'hidden',
+      border: '1px solid rgba(255,255,255,0.3)',
+      position: 'relative',
+      minHeight: 150,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      background: 'rgba(10,40,15,0.75)',
+      backdropFilter: 'blur(8px)',
+    }}>
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: `url('${foto}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.25,
+      }}/>
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(180deg, rgba(10,40,15,0) 0%, rgba(10,40,15,0.9) 70%)',
+      }}/>
+      <div style={{ position: 'relative', padding: '14px 16px' }}>
+        <div style={{ fontSize: 24, marginBottom: 6 }}>{icon}</div>
+        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', fontWeight: 500, marginBottom: 4 }}>{label}</div>
+        <div style={{ fontFamily: "'Sora',sans-serif", fontSize: 30, fontWeight: 800, color: '#fff', lineHeight: 1 }}>{val}</div>
+        <div style={{ fontSize: 11, fontWeight: 600, color: color, marginTop: 4 }}>{sub}</div>
+      </div>
+    </div>
+  )
+}
+
+const S = {
+  hdr:    { marginBottom: 20 },
+  title:  { fontFamily:"'Sora',sans-serif", fontSize: 22, fontWeight: 800, color: '#fff', margin: 0,
+            textShadow: '1px 1px 4px rgba(0,0,0,0.5)' },
+  grid4:  { display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 },
+  grid2:  { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 },
+  card:   { background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.5)', borderRadius: 16, overflow: 'hidden' },
+  cardH:  { padding: '13px 16px', borderBottom: '1px solid #eef1ee', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(26,92,42,0.05)' },
+  cardT:  { fontSize: 13, fontWeight: 700, color: '#1a3a1a' },
+  cardLnk:{ fontSize: 11, color: '#2d7a40', textDecoration: 'none', fontWeight: 600 },
+  aRow:   { display: 'flex', alignItems: 'center', gap: 12, padding: '11px 16px', borderBottom: '1px solid #eef1ee' },
+  aIco:   { width: 32, height: 32, borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 15 },
+  aInfo:  { flex: 1, minWidth: 0 },
+  aTitle: { fontSize: 12, fontWeight: 600, color: '#1e2e1e', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+  aSub:   { fontSize: 11, color: '#8d9e8d', marginTop: 2 },
+  aBtn:   { fontSize: 11, background: '#fff', border: '1px solid #dde3dd', borderRadius: 6, padding: '4px 11px', color: '#4a5e4a', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 },
+  spRow:  { display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid #eef1ee' },
+  spName: { fontSize: 13, fontWeight: 600, color: '#1e2e1e' },
+  spDet:  { fontSize: 11, color: '#8d9e8d', marginTop: 2 },
+  spCnt:  { fontFamily: "'Sora',sans-serif", fontSize: 22, fontWeight: 700 },
+}
+
+export default function Dashboard() {
+  const { kpis } = useDashboard()
+  const { alertas, atender } = useAlertas()
+  const { ganado } = useGanado()
+
+  const bovinos  = ganado.filter(a => a.especie === 'bovino').length
+  const ovinos   = ganado.filter(a => a.especie === 'ovino').length
+  const alpacas  = ganado.filter(a => a.especie === 'alpaca').length
+  const porcinos = ganado.filter(a => a.especie === 'porcino').length
 
   return (
-    <aside style={S.sidebar}>
-      {MENU.map(group => {
-        const visible = group.items.filter(i => !i.roles || i.roles.includes(rol))
-        if (!visible.length) return null
-        return (
-          <div key={group.section}>
-            <p style={S.section}>{group.section}</p>
-            {visible.map(item => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                style={({ isActive }) => ({ ...S.item, ...(isActive ? S.itemAct : {}) })}
-              >
-                <span style={S.icon}>{item.icon}</span>
-                <span style={S.label}>{item.label}</span>
-                {item.badge && badges[item.badge] > 0 && (
-                  <span style={{ ...S.badge, ...(item.badge==='insumos' ? S.badgeWarn : {}) }}>
-                    {badges[item.badge]}
-                  </span>
-                )}
-              </NavLink>
-            ))}
+    <div>
+      <div style={S.hdr}>
+        <h1 style={S.title}>Panel principal</h1>
+      </div>
+
+      <div style={S.grid4}>
+        <KpiCard foto={FOTOS.ganado}   icon="🐄" label="Total animales"    val={kpis?.total_animales ?? ganado.length} sub="activos en inventario" color="#c8a030"/>
+        <KpiCard foto={FOTOS.cultivos} icon="🌱" label="Hectáreas activas" val={kpis?.hectareas_activas ?? '—'}        sub={`${kpis?.cultivos_activos ?? 0} cultivos`} color="#c8a030"/>
+        <KpiCard foto={FOTOS.alertas}  icon="⚠️" label="Alertas sanitarias" val={alertas.length}                       sub={alertas.length > 0 ? 'revisar hoy' : 'sin alertas'} color={alertas.length > 0 ? '#ff9' : '#c8a030'}/>
+        <KpiCard foto={FOTOS.finanzas} icon="💰" label="Balance del mes"   val={kpis?.balance_mes != null ? `+S/${kpis.balance_mes}` : '—'} sub="ingresos vs egresos" color="#c8a030"/>
+      </div>
+
+      <div style={S.grid2}>
+        <div style={S.card}>
+          <div style={S.cardH}>
+            <div style={S.cardT}>🔔 Alertas activas</div>
+            {alertas.length > 0 ? <Badge color="red">{alertas.length} urgentes</Badge> : <Badge color="green">Sin alertas</Badge>}
           </div>
-        )
-      })}
-    </aside>
+          {alertas.length === 0
+            ? <EmptyState icon="✅" title="Todo en orden" description="No hay alertas pendientes." />
+            : alertas.map(a => (
+              <div key={a.id} style={S.aRow}>
+                <div style={{ ...S.aIco, background: a.estado === 'critico' ? '#fde8ea' : '#fef3dc' }}>
+                  {a.tipo === 'stock' ? '📦' : a.estado === 'critico' ? '🚨' : '⏰'}
+                </div>
+                <div style={S.aInfo}>
+                  <div style={S.aTitle}>{a.descripcion || a.animal?.nombre}</div>
+                  <div style={S.aSub}>{a.tipo === 'stock' ? `Stock: ${a.cantidad_actual}` : `${a.dias_restantes === 0 ? 'Vence hoy' : `${a.dias_restantes}d`}`}</div>
+                </div>
+                <button style={S.aBtn} onClick={() => atender(a.id)}>Atender</button>
+              </div>
+            ))
+          }
+        </div>
+
+        <div style={S.card}>
+          <div style={S.cardH}>
+            <div style={S.cardT}>🐄 Ganado por especie</div>
+            <a href="/ganado" style={S.cardLnk}>Ver todos →</a>
+          </div>
+          {[
+            { ico:'🐂', name:'Vacuno',  det:'Criollo / Holstein',  cnt: bovinos,  c:'#27500A' },
+            { ico:'🦙', name:'Alpaca',  det:'Huacaya / Suri',      cnt: alpacas,  c:'#7c3aed' },
+            { ico:'🐑', name:'Ovino',   det:'Corriedale / Merino', cnt: ovinos,   c:'#c2410c' },
+            { ico:'🐷', name:'Porcino', det:'Yorkshire / Cruce',   cnt: porcinos, c:'#db2777' },
+          ].map(sp => (
+            <div key={sp.name} style={S.spRow}>
+              <div style={{ fontSize: 22, flexShrink: 0 }}>{sp.ico}</div>
+              <div style={{ flex: 1 }}>
+                <div style={S.spName}>{sp.name}</div>
+                <div style={S.spDet}>{sp.det}</div>
+              </div>
+              <div style={{ ...S.spCnt, color: sp.c }}>{sp.cnt}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
