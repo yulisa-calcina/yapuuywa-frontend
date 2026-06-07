@@ -3,60 +3,108 @@ import { useAuth } from '../../context/AuthContext'
 
 const MENU = [
   { section:'General', items:[
-    { label:'Dashboard',         path:'/dashboard',  icon:'⊞' },
+    { label:'Dashboard',         path:'/dashboard',  icon:'🏠' },
   ]},
   { section:'Ganadería', items:[
     { label:'Inventario ganado', path:'/ganado',     icon:'🐄', roles:['admin','ganadero'] },
-    { label:'Control sanitario', path:'/sanitario',  icon:'🩺', badge:'alertas' },
+    { label:'Control sanitario', path:'/sanitario',  icon:'💉', badge:'alertas' },
     { label:'Producción',        path:'/produccion', icon:'🥛', roles:['admin','ganadero'] },
   ]},
   { section:'Agricultura', items:[
-    { label:'Parcelas',          path:'/parcelas',   icon:'📍', roles:['admin','ganadero'] },
-    { label:'Cultivos',          path:'/cultivos',   icon:'🌱', roles:['admin','ganadero'] },
+    { label:'Parcelas',          path:'/parcelas',   icon:'🗺️', roles:['admin','ganadero'] },
+    { label:'Cultivos',          path:'/cultivos',   icon:'🌾', roles:['admin','ganadero'] },
   ]},
   { section:'Sistema', items:[
-    { label:'Insumos',           path:'/insumos',    icon:'📦', badge:'insumos' },
-    { label:'Personal',          path:'/personal',   icon:'👷', roles:['admin'] },
-    { label:'Finanzas',          path:'/finanzas',   icon:'💰', roles:['admin','ganadero'] },
-    { label:'Reportes PDF',      path:'/reportes',   icon:'📄' },
-    { label:'Usuarios',          path:'/usuarios',   icon:'👤', roles:['admin'] },
+    { label:'Insumos',           path:'/insumos',    icon:'🧪', badge:'insumos' },
+    { label:'Personal',          path:'/personal',   icon:'👨‍🌾', roles:['admin'] },
+    { label:'Finanzas',          path:'/finanzas',   icon:'💵', roles:['admin','ganadero'] },
+    { label:'Reportes PDF',      path:'/reportes',   icon:'📊' },
+    { label:'Usuarios',          path:'/usuarios',   icon:'👥', roles:['admin'] },
   ]},
 ]
 
-const S = {
-  sidebar:  { width:200, background:'#fff', borderRight:'1px solid #dde3dd', display:'flex', flexDirection:'column', flexShrink:0, padding:'10px 0', overflowY:'auto' },
-  section:  { padding:'10px 14px 3px', fontSize:9, fontWeight:700, color:'#8d9e8d', letterSpacing:'.1em', textTransform:'uppercase' },
-  item:     { display:'flex', alignItems:'center', gap:8, padding:'8px 10px', margin:'1px 6px', borderRadius:10, fontSize:12, fontWeight:500, color:'#4a5e4a', transition:'all .12s', textDecoration:'none' },
-  itemHov:  { background:'#eef1ee', color:'#1e2e1e' },
-  itemAct:  { background:'#eef7f0', color:'#1a5c2a', borderRight:'2px solid #2d7a40' },
-  icon:     { fontSize:14, flexShrink:0 },
-  label:    { flex:1 },
-  badge:    { marginLeft:'auto', background:'#fde8ea', color:'#8b1a24', fontSize:10, fontWeight:700, padding:'1px 6px', borderRadius:20, minWidth:18, textAlign:'center' },
-  badgeWarn:{ background:'#fef3dc', color:'#7a4f08' },
-}
-
-export default function Sidebar({ badges={} }) {
+export default function Sidebar({ badges = {} }) {
   const { user } = useAuth()
   const rol = user?.rol || 'ganadero'
 
   return (
-    <aside style={S.sidebar}>
+    <aside style={{
+      width: 220,
+      background: 'linear-gradient(180deg, #0d3318 0%, #1a5c2a 100%)',
+      borderRight: '1px solid rgba(45,122,64,0.3)',
+      display: 'flex',
+      flexDirection: 'column',
+      flexShrink: 0,
+      padding: '12px 0',
+      overflowY: 'auto',
+    }}>
+
+      {/* LOGO */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        padding: '10px 16px 16px',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        marginBottom: 8,
+      }}>
+        <img src="/logo.png" alt="logo" style={{ width:38, height:38, borderRadius:10, objectFit:'contain' }}/>
+        <div>
+          <div style={{ fontFamily:"'Sora',sans-serif", fontSize:15, fontWeight:800, color:'#fff', lineHeight:1.1 }}>YapuUywa</div>
+          <div style={{ fontSize:9, color:'#c8a030', letterSpacing:'0.15em', textTransform:'uppercase', marginTop:2 }}>SGA</div>
+        </div>
+      </div>
+
       {MENU.map(group => {
         const visible = group.items.filter(i => !i.roles || i.roles.includes(rol))
         if (!visible.length) return null
         return (
           <div key={group.section}>
-            <p style={S.section}>{group.section}</p>
+            <p style={{
+              padding: '10px 16px 4px',
+              fontSize: 9,
+              fontWeight: 700,
+              color: 'rgba(255,255,255,0.3)',
+              letterSpacing: '.12em',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}>
+              {group.section}
+            </p>
             {visible.map(item => (
               <NavLink
                 key={item.path}
                 to={item.path}
-                style={({ isActive }) => ({ ...S.item, ...(isActive ? S.itemAct : {}) })}
+                style={({ isActive }) => ({
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 12px',
+                  margin: '2px 8px',
+                  borderRadius: 10,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  transition: 'all .15s',
+                  background: isActive ? 'rgba(200,160,48,0.2)' : 'transparent',
+                  color: isActive ? '#c8a030' : 'rgba(255,255,255,0.65)',
+                  borderLeft: isActive ? '3px solid #c8a030' : '3px solid transparent',
+                })}
               >
-                <span style={S.icon}>{item.icon}</span>
-                <span style={S.label}>{item.label}</span>
+                <span style={{ fontSize: 18, flexShrink: 0 }}>{item.icon}</span>
+                <span style={{ flex: 1 }}>{item.label}</span>
                 {item.badge && badges[item.badge] > 0 && (
-                  <span style={{ ...S.badge, ...(item.badge==='insumos' ? S.badgeWarn : {}) }}>
+                  <span style={{
+                    marginLeft: 'auto',
+                    background: item.badge === 'insumos' ? '#c8a030' : '#dc3545',
+                    color: '#fff',
+                    fontSize: 10,
+                    fontWeight: 700,
+                    padding: '2px 7px',
+                    borderRadius: 20,
+                    minWidth: 18,
+                    textAlign: 'center',
+                  }}>
                     {badges[item.badge]}
                   </span>
                 )}
@@ -65,6 +113,30 @@ export default function Sidebar({ badges={} }) {
           </div>
         )
       })}
+
+      {/* USUARIO ABAJO */}
+      <div style={{
+        marginTop: 'auto',
+        padding: '12px 16px',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+      }}>
+        <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+          <div style={{
+            width: 32, height: 32,
+            borderRadius: '50%',
+            background: '#2d7a40',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 13, fontWeight: 700, color: '#fff',
+            flexShrink: 0,
+          }}>
+            {(user?.nombre || 'U').charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <div style={{ fontSize: 12, fontWeight: 600, color: '#fff' }}>{user?.nombre || 'Usuario'}</div>
+            <div style={{ fontSize: 10, color: '#c8a030', textTransform: 'capitalize' }}>{user?.rol || 'rol'}</div>
+          </div>
+        </div>
+      </div>
     </aside>
   )
 }
