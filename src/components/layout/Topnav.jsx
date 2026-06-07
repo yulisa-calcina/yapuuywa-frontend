@@ -23,63 +23,129 @@ export default function Topnav({ activePath, alertCount=0 }) {
 
   const handleLogout = async () => { await logout(); navigate('/login') }
 
-  const S = {
-    nav:   { background:'#1a5c2a', height:54, display:'flex', alignItems:'center', padding:'0 20px', gap:16, flexShrink:0, position:'sticky', top:0, zIndex:100 },
-    brand: { display:'flex', alignItems:'center', gap:10, textDecoration:'none' },
-    icon:  { width:34, height:34, borderRadius:9, background:'#2d7a40', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 },
-    name:  { fontFamily:"'Sora',sans-serif", fontSize:15, fontWeight:700, color:'#fff' },
-    sga:   { fontSize:10, color:'#a8d5b5', fontWeight:500, letterSpacing:'.06em' },
-    links: { display:'flex', gap:2, marginLeft:8 },
-    link:  { padding:'6px 13px', borderRadius:6, fontSize:12, fontWeight:500, color:'#a8d5b5', transition:'all .15s', textDecoration:'none' },
-    linkActive: { background:'#2d7a40', color:'#fff' },
-    spacer: { flex:1 },
-    right:  { display:'flex', alignItems:'center', gap:10 },
-    online: { display:'flex', alignItems:'center', gap:5, fontSize:11, color:'#a8d5b5' },
-    dot:    { width:7, height:7, borderRadius:'50%', background:'#4ade80' },
-    bell:   { position:'relative', width:32, height:32, borderRadius:8, background:'rgba(255,255,255,.08)', border:'none', color:'#a8d5b5', display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, cursor:'pointer' },
-    bellBadge: { position:'absolute', top:3, right:3, minWidth:16, height:16, borderRadius:8, background:'#dc3545', border:'2px solid #1a5c2a', fontSize:9, fontWeight:700, color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', padding:'0 3px' },
-    chip:   { display:'flex', alignItems:'center', gap:8, background:'rgba(255,255,255,.08)', borderRadius:20, padding:'4px 12px 4px 4px' },
-    avatar: { width:28, height:28, borderRadius:'50%', background:'#2d7a40', display:'flex', alignItems:'center', justifyContent:'center', fontSize:11, fontWeight:600, color:'#fff', flexShrink:0 },
-    uname:  { fontSize:12, fontWeight:500, color:'#fff' },
-    rbadge: { fontSize:10, padding:'2px 8px', borderRadius:20, fontWeight:500, background:'#eef7f0', color:'#1a5c2a' },
-    logout: { background:'none', border:'1px solid rgba(255,255,255,.2)', color:'#a8d5b5', padding:'5px 12px', borderRadius:6, fontSize:11, cursor:'pointer' },
-  }
-
   return (
-    <nav style={S.nav}>
-      <Link to="/dashboard" style={S.brand}>
-        <div style={S.icon}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#d4edd9">
-            <path d="M17 8C8 10 5.9 16.17 3.82 19.65c.33.41.75.64 1.18.35C7 19 8 17 9 15c2 0 5 1 7 5 0 0 1-7-3-10 0 0 2 0 4 2 0 0 0-4-4-4z"/>
-          </svg>
-        </div>
+    <nav style={{
+      background: 'linear-gradient(90deg, #0d3318, #1a5c2a)',
+      height: 62,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 20px',
+      gap: 16,
+      flexShrink: 0,
+      position: 'sticky',
+      top: 0,
+      zIndex: 100,
+      borderBottom: '1px solid rgba(200,160,48,0.3)',
+    }}>
+
+      {/* LOGO + NOMBRE */}
+      <Link to="/dashboard" style={{ display:'flex', alignItems:'center', gap:10, textDecoration:'none', flexShrink:0 }}>
+        <img src="/logo.png" alt="YapuUywa" style={{ width:42, height:42, borderRadius:10, objectFit:'contain' }}/>
         <div>
-          <span style={S.name}>YapuUywa <span style={S.sga}>SGA</span></span>
+          <div style={{ fontFamily:"'Sora',sans-serif", fontSize:18, fontWeight:800, color:'#fff', lineHeight:1.1, letterSpacing:'-0.3px' }}>
+            YapuUywa
+          </div>
+          <div style={{ fontSize:9, color:'#c8a030', letterSpacing:'0.18em', textTransform:'uppercase', marginTop:1 }}>
+            SGA
+          </div>
         </div>
       </Link>
 
-      <div style={S.links}>
+      {/* SEPARADOR */}
+      <div style={{ width:1, height:32, background:'rgba(255,255,255,0.1)', flexShrink:0 }}/>
+
+      {/* LINKS */}
+      <div style={{ display:'flex', gap:2 }}>
         {NAV_LINKS.map(l => (
-          <Link key={l.path} to={l.path} style={{ ...S.link, ...(activePath?.startsWith(l.path) ? S.linkActive : {}) }}>
+          <Link key={l.path} to={l.path} style={{
+            padding: '7px 15px',
+            borderRadius: 8,
+            fontSize: 14,
+            fontWeight: 600,
+            color: activePath?.startsWith(l.path) ? '#fff' : 'rgba(255,255,255,0.6)',
+            textDecoration: 'none',
+            background: activePath?.startsWith(l.path) ? 'rgba(200,160,48,0.2)' : 'transparent',
+            borderBottom: activePath?.startsWith(l.path) ? '2px solid #c8a030' : '2px solid transparent',
+            transition: 'all .15s',
+          }}>
             {l.label}
           </Link>
         ))}
       </div>
 
-      <div style={S.spacer} />
+      <div style={{ flex:1 }}/>
 
-      <div style={S.right}>
-        <div style={S.online}><div style={S.dot}/>En línea</div>
-        <Link to="/alertas" style={S.bell}>
-          🔔
-          {alertCount > 0 && <span style={S.bellBadge}>{alertCount}</span>}
-        </Link>
-        <div style={S.chip}>
-          <div style={S.avatar}>{initials(user?.nombre)}</div>
-          <span style={S.uname}>{user?.nombre || 'Usuario'}</span>
-          <span style={S.rbadge}>{rolLabel(user?.rol)}</span>
+      {/* DERECHA */}
+      <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+
+        {/* EN LÍNEA */}
+        <div style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, color:'rgba(255,255,255,0.6)' }}>
+          <div style={{ width:7, height:7, borderRadius:'50%', background:'#4ade80' }}/>
+          En línea
         </div>
-        <button style={S.logout} onClick={handleLogout}>Salir</button>
+
+        {/* CAMPANA */}
+        <Link to="/alertas" style={{
+          position: 'relative',
+          width: 36, height: 36,
+          borderRadius: 9,
+          background: 'rgba(255,255,255,0.08)',
+          color: 'rgba(255,255,255,0.7)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 18,
+          textDecoration: 'none',
+          border: '1px solid rgba(255,255,255,0.1)',
+        }}>
+          🔔
+          {alertCount > 0 && (
+            <span style={{
+              position: 'absolute', top:3, right:3,
+              minWidth:16, height:16, borderRadius:8,
+              background:'#dc3545', border:'2px solid #1a5c2a',
+              fontSize:9, fontWeight:700, color:'#fff',
+              display:'flex', alignItems:'center', justifyContent:'center',
+              padding:'0 3px',
+            }}>
+              {alertCount}
+            </span>
+          )}
+        </Link>
+
+        {/* CHIP USUARIO */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap:8,
+          background: 'rgba(255,255,255,0.08)',
+          borderRadius: 20,
+          padding: '4px 14px 4px 4px',
+          border: '1px solid rgba(255,255,255,0.1)',
+        }}>
+          <div style={{
+            width:32, height:32, borderRadius:'50%',
+            background: '#2d7a40',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontSize:13, fontWeight:700, color:'#fff', flexShrink:0,
+          }}>
+            {initials(user?.nombre)}
+          </div>
+          <span style={{ fontSize:14, fontWeight:600, color:'#fff' }}>{user?.nombre || 'Usuario'}</span>
+          <span style={{ fontSize:11, padding:'2px 8px', borderRadius:20, fontWeight:600, background:'rgba(200,160,48,0.2)', color:'#c8a030' }}>
+            {rolLabel(user?.rol)}
+          </span>
+        </div>
+
+        {/* SALIR */}
+        <button onClick={handleLogout} style={{
+          background: 'none',
+          border: '1px solid rgba(255,255,255,0.2)',
+          color: 'rgba(255,255,255,0.7)',
+          padding: '7px 16px',
+          borderRadius: 8,
+          fontSize: 13,
+          fontWeight: 600,
+          cursor: 'pointer',
+        }}>
+          Salir
+        </button>
       </div>
     </nav>
   )
