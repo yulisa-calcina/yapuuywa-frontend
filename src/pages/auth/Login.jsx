@@ -65,165 +65,295 @@ export default function Login() {
 
   const setRegField = k => e => setRegForm(f => ({ ...f, [k]: e.target.value }))
 
+  const inputStyle = {
+    width: '100%',
+    padding: '12px 16px',
+    border: '1.5px solid rgba(255,255,255,0.3)',
+    borderRadius: 10,
+    fontSize: 14,
+    color: '#1a3a1a',
+    background: 'rgba(255,255,255,0.7)',
+    outline: 'none',
+    boxSizing: 'border-box',
+    fontFamily: 'inherit',
+  }
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: 11,
+    fontWeight: 600,
+    color: '#1a4a1a',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+    letterSpacing: '0.08em',
+  }
+
   return (
     <div style={{
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1920&q=80')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
+      position: 'relative',
+      overflow: 'hidden',
       fontFamily: "'Segoe UI', sans-serif",
-      padding: 20,
     }}>
+      {/* FONDO DIVIDIDO */}
       <div style={{
-        background: 'rgba(255,255,255,0.97)',
-        borderRadius: 20,
-        padding: '40px 36px',
-        width: '100%',
-        maxWidth: 440,
-        boxShadow: '0 25px 60px rgba(0,0,0,0.4)',
+        position: 'absolute', inset: 0,
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
       }}>
+        {/* Mitad ganado */}
+        <div style={{
+          background: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=960&q=80')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}/>
+        {/* Mitad cultivos */}
+        <div style={{
+          background: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=960&q=80')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}/>
+      </div>
+
+      {/* LÍNEA DIVISORIA CENTRAL */}
+      <div style={{
+        position: 'absolute',
+        top: 0, bottom: 0,
+        left: '50%',
+        width: 3,
+        background: 'linear-gradient(180deg, transparent, #f0c040, #2d7a40, #f0c040, transparent)',
+        transform: 'translateX(-50%)',
+        zIndex: 1,
+      }}/>
+
+      {/* TARJETA LOGIN */}
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        background: 'rgba(210, 240, 215, 0.92)',
+        backdropFilter: 'blur(12px)',
+        borderRadius: 24,
+        padding: '40px 40px',
+        width: '100%',
+        maxWidth: 480,
+        boxShadow: '0 30px 80px rgba(0,0,0,0.5)',
+        border: '1.5px solid rgba(255,255,255,0.5)',
+      }}>
+
         {/* LOGO */}
-        <div style={{ textAlign:'center', marginBottom:24 }}>
-          <img src="/logo.png" alt="YapuUywa" style={{ width:120, height:120, objectFit:'contain' }}/>
-          <h1 style={{ fontFamily:"'Sora',sans-serif", fontSize:22, fontWeight:700, color:'#1a5c2a', margin:'8px 0 2px' }}>
-            YapuUywa SGA
-          </h1>
-          <p style={{ fontSize:12, color:'#666', margin:0 }}>
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <img src="/logo.png" alt="YapuUywa"
+            style={{ width: 100, height: 100, objectFit: 'contain', borderRadius: 20,
+              boxShadow: '0 8px 20px rgba(0,0,0,0.2)' }}/>
+        </div>
+
+        {/* TÍTULO 3D GRANDE */}
+        <div style={{ textAlign: 'center', marginBottom: 6 }}>
+          <div style={{
+            fontSize: 42,
+            fontWeight: 800,
+            fontFamily: "'Sora', 'Segoe UI', sans-serif",
+            color: '#0d3318',
+            textShadow: '2px 2px 0px #2d7a40, 4px 4px 0px rgba(45,122,64,0.5), 6px 6px 0px rgba(45,122,64,0.2)',
+            lineHeight: 1.1,
+            letterSpacing: '-1px',
+          }}>
+            YapuUywa
+          </div>
+          <div style={{
+            fontSize: 16,
+            fontWeight: 700,
+            color: '#1a5c2a',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            marginTop: 4,
+          }}>
+            SGA
+          </div>
+          <div style={{
+            fontSize: 12,
+            color: '#2d5a2d',
+            marginTop: 4,
+            letterSpacing: '0.05em',
+          }}>
             Sistema de Gestión Agropecuaria
-          </p>
-          <p style={{ fontSize:11, color:'#888', marginTop:4 }}>
-            Por favor ingrese sus credenciales
-          </p>
+          </div>
+          <div style={{
+            width: 60, height: 3,
+            background: 'linear-gradient(90deg, #2d7a40, #c8a030)',
+            margin: '10px auto 0',
+            borderRadius: 2,
+          }}/>
+        </div>
+
+        {/* SUBTÍTULO */}
+        <div style={{ textAlign: 'center', fontSize: 12, color: '#3a5a3a', marginBottom: 24 }}>
+          Por favor ingrese sus credenciales
         </div>
 
         {/* TABS */}
-        <div style={{ display:'flex', background:'#f0f4f0', borderRadius:10, padding:4, marginBottom:24 }}>
-          {['login','register'].map(m => (
-            <button key={m} onClick={()=>setModo(m)} style={{
-              flex:1, padding:'9px', borderRadius:8, border:'none', cursor:'pointer',
-              fontWeight:600, fontSize:13, transition:'all .2s',
-              background: modo===m ? '#1a5c2a' : 'transparent',
-              color: modo===m ? '#fff' : '#4a5e4a',
+        <div style={{
+          display: 'flex',
+          background: 'rgba(255,255,255,0.4)',
+          borderRadius: 12,
+          padding: 4,
+          marginBottom: 24,
+          border: '1px solid rgba(255,255,255,0.5)',
+        }}>
+          {['login', 'register'].map(m => (
+            <button key={m} onClick={() => setModo(m)} style={{
+              flex: 1,
+              padding: '10px',
+              borderRadius: 9,
+              border: 'none',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: 13,
+              transition: 'all .2s',
+              fontFamily: 'inherit',
+              background: modo === m ? '#1a5c2a' : 'transparent',
+              color: modo === m ? '#fff' : '#2d5a2d',
+              boxShadow: modo === m ? '0 3px 8px rgba(0,0,0,0.2)' : 'none',
             }}>
-              {m==='login' ? 'Ingresar' : 'Crear cuenta'}
+              {m === 'login' ? 'Ingresar' : 'Crear cuenta'}
             </button>
           ))}
         </div>
 
         {modo === 'login' ? (
           <>
-            <h2 style={{ fontSize:16, fontWeight:600, color:'#1e2e1e', marginBottom:4 }}>
-              Bienvenido al sistema
-            </h2>
-            <p style={{ fontSize:12, color:'#888', marginBottom:20 }}>
-              Ingresa tu DNI y contraseña para continuar
-            </p>
             {error && (
-              <div style={{ background:'#fde8ea', color:'#8b1a24', borderRadius:8, padding:'10px 14px', fontSize:12, marginBottom:16, fontWeight:500 }}>
+              <div style={{
+                background: 'rgba(139,26,36,0.1)',
+                color: '#6b1020',
+                border: '1px solid rgba(139,26,36,0.3)',
+                borderRadius: 10,
+                padding: '10px 14px',
+                fontSize: 12,
+                marginBottom: 16,
+                fontWeight: 500,
+              }}>
                 ⚠️ {error}
               </div>
             )}
             <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom:14 }}>
-                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>
-                  DNI *
-                </label>
-                <input
-                  style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:14, color:'#1e2e1e', outline:'none', boxSizing:'border-box' }}
-                  type="text" placeholder="Ingresa tus 8 dígitos" maxLength={8} inputMode="numeric"
-                  value={dni} onChange={e=>setDni(e.target.value.replace(/\D/g,''))} disabled={blocked}
-                />
+              <div style={{ marginBottom: 16 }}>
+                <label style={labelStyle}>DNI *</label>
+                <input style={inputStyle} type="text"
+                  placeholder="Ingresa tus 8 dígitos"
+                  maxLength={8} inputMode="numeric"
+                  value={dni}
+                  onChange={e => setDni(e.target.value.replace(/\D/g, ''))}
+                  disabled={blocked}/>
+                <div style={{ fontSize: 10, color: '#4a7a4a', marginTop: 4 }}>
+                  Tu DNI es tu identificador de acceso
+                </div>
               </div>
-              <div style={{ marginBottom:20 }}>
-                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>
-                  CONTRASEÑA *
-                </label>
-                <input
-                  style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:14, color:'#1e2e1e', outline:'none', boxSizing:'border-box' }}
-                  type="password" placeholder="Mínimo 8 caracteres"
-                  value={pass} onChange={e=>setPass(e.target.value)} disabled={blocked}
-                />
+              <div style={{ marginBottom: 24 }}>
+                <label style={labelStyle}>Contraseña *</label>
+                <input style={inputStyle} type="password"
+                  placeholder="Mínimo 8 caracteres"
+                  value={pass}
+                  onChange={e => setPass(e.target.value)}
+                  disabled={blocked}/>
               </div>
-              <button style={{
-                width:'100%', background:'#1a5c2a', color:'#fff', border:'none',
-                padding:'13px', borderRadius:10, fontSize:15, fontWeight:600, cursor:'pointer',
-                opacity: loading||blocked ? .6 : 1,
-              }} type="submit" disabled={loading||blocked}>
+              <button type="submit" disabled={loading || blocked} style={{
+                width: '100%',
+                padding: '14px',
+                background: '#1a5c2a',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 12,
+                fontSize: 15,
+                fontWeight: 700,
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                boxShadow: '4px 4px 0px #0d3318',
+                opacity: loading || blocked ? 0.6 : 1,
+                letterSpacing: '0.03em',
+              }}>
                 {loading ? 'Verificando...' : '→ Ingresar al sistema'}
               </button>
             </form>
-
-            <div style={{ marginTop:20, display:'flex', flexDirection:'column', gap:8 }}>
-              {[
-                ['🛡️','Administrador','Acceso completo'],
-                ['🐄','Ganadero / Agricultor','Módulos productivos'],
-                ['🩺','Veterinario / Técnico','Módulo sanitario'],
-              ].map(([ico,name,desc]) => (
-                <div key={name} style={{ display:'flex', alignItems:'center', gap:10, background:'#f7f9f7', borderRadius:8, padding:'8px 12px' }}>
-                  <span style={{ fontSize:18 }}>{ico}</span>
-                  <div>
-                    <div style={{ fontSize:12, fontWeight:600, color:'#1e2e1e' }}>{name}</div>
-                    <div style={{ fontSize:10, color:'#8d9e8d' }}>{desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </>
         ) : (
           <>
-            <h2 style={{ fontSize:16, fontWeight:600, color:'#1e2e1e', marginBottom:4 }}>Crear cuenta</h2>
-            <p style={{ fontSize:12, color:'#888', marginBottom:20 }}>Regístrate para usar YapuUywa</p>
             {regError && (
-              <div style={{ background:'#fde8ea', color:'#8b1a24', borderRadius:8, padding:'10px 14px', fontSize:12, marginBottom:16, fontWeight:500 }}>
+              <div style={{
+                background: 'rgba(139,26,36,0.1)',
+                color: '#6b1020',
+                border: '1px solid rgba(139,26,36,0.3)',
+                borderRadius: 10,
+                padding: '10px 14px',
+                fontSize: 12,
+                marginBottom: 16,
+                fontWeight: 500,
+              }}>
                 ⚠️ {regError}
               </div>
             )}
             <form onSubmit={handleRegister}>
-              <div style={{ marginBottom:14 }}>
-                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>NOMBRE COMPLETO *</label>
-                <input style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:14, outline:'none', boxSizing:'border-box' }}
-                  type="text" placeholder="Ej: Juan Mamani" value={regForm.nombre} onChange={setRegField('nombre')} required/>
+              <div style={{ marginBottom: 14 }}>
+                <label style={labelStyle}>Nombre completo *</label>
+                <input style={inputStyle} type="text"
+                  placeholder="Ej: Juan Mamani"
+                  value={regForm.nombre}
+                  onChange={setRegField('nombre')} required/>
               </div>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:14 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
                 <div>
-                  <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>DNI *</label>
-                  <input style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:14, outline:'none', boxSizing:'border-box' }}
-                    type="text" placeholder="8 dígitos" maxLength={8} value={regForm.dni} onChange={setRegField('dni')} required/>
+                  <label style={labelStyle}>DNI *</label>
+                  <input style={inputStyle} type="text"
+                    placeholder="8 dígitos" maxLength={8}
+                    value={regForm.dni}
+                    onChange={setRegField('dni')} required/>
                 </div>
                 <div>
-                  <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>ROL *</label>
-                  <select style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:13, outline:'none', boxSizing:'border-box', background:'#fff' }}
-                    value={regForm.rol} onChange={setRegField('rol')} required>
+                  <label style={labelStyle}>Rol *</label>
+                  <select style={inputStyle} value={regForm.rol}
+                    onChange={setRegField('rol')} required>
                     <option value="ganadero">Ganadero</option>
                     <option value="veterinario">Veterinario</option>
                   </select>
                 </div>
               </div>
-              <div style={{ marginBottom:14 }}>
-                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>CONTRASEÑA *</label>
-                <input style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:14, outline:'none', boxSizing:'border-box' }}
-                  type="password" placeholder="Mínimo 8 caracteres" value={regForm.password} onChange={setRegField('password')} required/>
+              <div style={{ marginBottom: 14 }}>
+                <label style={labelStyle}>Contraseña *</label>
+                <input style={inputStyle} type="password"
+                  placeholder="Mínimo 8 caracteres"
+                  value={regForm.password}
+                  onChange={setRegField('password')} required/>
               </div>
-              <div style={{ marginBottom:20 }}>
-                <label style={{ display:'block', fontSize:11, fontWeight:600, color:'#4a5e4a', marginBottom:6, textTransform:'uppercase', letterSpacing:'.05em' }}>CONFIRMAR CONTRASEÑA *</label>
-                <input style={{ width:'100%', padding:'11px 14px', border:'1.5px solid #dde3dd', borderRadius:10, fontSize:14, outline:'none', boxSizing:'border-box' }}
-                  type="password" placeholder="Repite la contraseña" value={regForm.password_confirmation} onChange={setRegField('password_confirmation')} required/>
+              <div style={{ marginBottom: 24 }}>
+                <label style={labelStyle}>Confirmar contraseña *</label>
+                <input style={inputStyle} type="password"
+                  placeholder="Repite la contraseña"
+                  value={regForm.password_confirmation}
+                  onChange={setRegField('password_confirmation')} required/>
               </div>
-              <button style={{
-                width:'100%', background:'#1a5c2a', color:'#fff', border:'none',
-                padding:'13px', borderRadius:10, fontSize:15, fontWeight:600, cursor:'pointer',
-                opacity: regLoading ? .6 : 1,
-              }} type="submit" disabled={regLoading}>
+              <button type="submit" disabled={regLoading} style={{
+                width: '100%',
+                padding: '14px',
+                background: '#1a5c2a',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 12,
+                fontSize: 15,
+                fontWeight: 700,
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                boxShadow: '4px 4px 0px #0d3318',
+                opacity: regLoading ? 0.6 : 1,
+              }}>
                 {regLoading ? 'Creando cuenta...' : '→ Crear mi cuenta'}
               </button>
             </form>
           </>
         )}
 
-        <p style={{ textAlign:'center', fontSize:10, color:'#aaa', marginTop:20 }}>
+        <p style={{ textAlign: 'center', fontSize: 10, color: '#4a6a4a', marginTop: 20, marginBottom: 0 }}>
           YapuUywa SGA © 2026 · Puno, Perú
         </p>
       </div>
