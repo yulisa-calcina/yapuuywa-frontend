@@ -39,22 +39,6 @@ export default function Sidebar({ badges = {} }) {
       overflowY: 'auto',
     }}>
 
-      {/* LOGO */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        padding: '10px 16px 16px',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
-        marginBottom: 8,
-      }}>
-        <img src="/logo.png" alt="logo" style={{ width:38, height:38, borderRadius:10, objectFit:'contain' }}/>
-        <div>
-          <div style={{ fontFamily:"'Sora',sans-serif", fontSize:15, fontWeight:800, color:'#fff', lineHeight:1.1 }}>YapuUywa</div>
-          <div style={{ fontSize:9, color:'#c8a030', letterSpacing:'0.15em', textTransform:'uppercase', marginTop:2 }}>SGA</div>
-        </div>
-      </div>
-
       {MENU.map(group => {
         const visible = group.items.filter(i => !i.roles || i.roles.includes(rol))
         if (!visible.length) return null
