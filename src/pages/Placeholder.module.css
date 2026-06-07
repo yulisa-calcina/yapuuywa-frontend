@@ -1,0 +1,4 @@
+.hdr   { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
+.title { font-family:var(--font-display); font-size:20px; font-weight:700; color:var(--gray-800); }
+.sub   { font-size:12px; color:var(--gray-400); margin-top:3px; }
+.card  { background:var(--white); border:1px solid var(--gray-200); border-radius:var(--r-lg); overflow:hidden; min-height:300px; display:flex; align-items:center; justify-content:center; }

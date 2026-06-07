@@ -1,0 +1,9 @@
+.sidebar  { width:200px; background:var(--white); border-right:1px solid var(--gray-200); display:flex; flex-direction:column; flex-shrink:0; padding:10px 0; overflow-y:auto; }
+.section  { padding:10px 14px 3px; font-size:9px; font-weight:700; color:var(--gray-400); letter-spacing:.1em; text-transform:uppercase; }
+.item     { display:flex; align-items:center; gap:8px; padding:8px 10px; margin:1px 6px; border-radius:var(--r-md); font-size:12px; font-weight:500; color:var(--gray-600); transition:all .12s; text-decoration:none; position:relative; }
+.item:hover { background:var(--gray-100); color:var(--gray-800); }
+.item.active { background:var(--g50); color:var(--g800); border-right:2px solid var(--g600); }
+.item_icon  { font-size:14px; flex-shrink:0; }
+.item_label { flex:1; }
+.badge      { margin-left:auto; background:var(--red-bg); color:var(--red-text); font-size:10px; font-weight:700; padding:1px 6px; border-radius:20px; min-width:18px; text-align:center; }
+.badge_warn { background:var(--amber-bg); color:var(--amber-txt); }

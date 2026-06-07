@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Sora:wght@400;500;600;700&display=swap');
+
+:root {
+  --g900: #0d3318;
+  --g800: #1a5c2a;
+  --g700: #1e6b30;
+  --g600: #2d7a40;
+  --g500: #3b8c52;
+  --g400: #4ea066;
+  --g200: #a8d5b5;
+  --g100: #d4edd9;
+  --g50:  #eef7f0;
+  --red:       #dc3545;
+  --red-bg:    #fde8ea;
+  --red-text:  #8b1a24;
+  --amber:     #e8a020;
+  --amber-bg:  #fef3dc;
+  --amber-txt: #7a4f08;
+  --blue:      #1d6fa5;
+  --blue-bg:   #e3f0fb;
+  --blue-txt:  #0c3d62;
+  --gray-50:  #f7f9f7;
+  --gray-100: #eef1ee;
+  --gray-200: #dde3dd;
+  --gray-300: #c2ccc2;
+  --gray-400: #8d9e8d;
+  --gray-500: #6b7b6b;
+  --gray-600: #4a5e4a;
+  --gray-700: #334533;
+  --gray-800: #1e2e1e;
+  --white:    #ffffff;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Sora', sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.09);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--gray-50); color: var(--gray-800); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+button { font-family: var(--font-body); cursor: pointer; }
+input, select, textarea { font-family: var(--font-body); }
+a { text-decoration: none; color: inherit; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
