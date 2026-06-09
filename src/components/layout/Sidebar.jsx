@@ -3,23 +3,23 @@ import { useAuth } from '../../context/AuthContext'
 
 const MENU = [
   { section:'General', items:[
-    { label:'Dashboard',         path:'/dashboard',  icon:'⊞' },
+    { label:'Dashboard',         path:'/dashboard',  icon:'🏠' },
   ]},
   { section:'Ganadería', items:[
-    { label:'Inventario ganado', path:'/ganado',     icon:'▸', roles:['admin','ganadero'] },
-    { label:'Control sanitario', path:'/sanitario',  icon:'▸', badge:'alertas' },
-    { label:'Producción',        path:'/produccion', icon:'▸', roles:['admin','ganadero'] },
+    { label:'Inventario ganado', path:'/ganado',     icon:'🐄', roles:['admin','ganadero'] },
+    { label:'Control sanitario', path:'/sanitario',  icon:'💉', badge:'alertas' },
+    { label:'Producción',        path:'/produccion', icon:'🥛', roles:['admin','ganadero'] },
   ]},
   { section:'Agricultura', items:[
-    { label:'Parcelas',          path:'/parcelas',   icon:'▸', roles:['admin','ganadero'] },
-    { label:'Cultivos',          path:'/cultivos',   icon:'▸', roles:['admin','ganadero'] },
+    { label:'Parcelas',          path:'/parcelas',   icon:'🗺️', roles:['admin','ganadero'] },
+    { label:'Cultivos',          path:'/cultivos',   icon:'🌾', roles:['admin','ganadero'] },
   ]},
   { section:'Sistema', items:[
-    { label:'Insumos',           path:'/insumos',    icon:'▸', badge:'insumos' },
-    { label:'Personal',          path:'/personal',   icon:'▸', roles:['admin'] },
-    { label:'Finanzas',          path:'/finanzas',   icon:'▸', roles:['admin','ganadero'] },
-    { label:'Reportes PDF',      path:'/reportes',   icon:'▸' },
-    { label:'Usuarios',          path:'/usuarios',   icon:'▸', roles:['admin'] },
+    { label:'Insumos',           path:'/insumos',    icon:'🧪', badge:'insumos' },
+    { label:'Personal',          path:'/personal',   icon:'👨‍🌾', roles:['admin'] },
+    { label:'Finanzas',          path:'/finanzas',   icon:'💵', roles:['admin','ganadero'] },
+    { label:'Reportes PDF',      path:'/reportes',   icon:'📊' },
+    { label:'Usuarios',          path:'/usuarios',   icon:'👥', roles:['admin'] },
   ]},
 ]
 
@@ -75,7 +75,7 @@ export default function Sidebar({ badges = {} }) {
                   borderLeft: isActive ? '3px solid #c8a030' : '3px solid transparent',
                 })}
               >
-                <span style={{ fontSize: 14, flexShrink: 0, opacity: 0.7 }}>{item.icon}</span>
+                <span style={{ fontSize: 18, flexShrink: 0 }}>{item.icon}</span>
                 <span style={{ flex: 1 }}>{item.label}</span>
                 {item.badge && badges[item.badge] > 0 && (
                   <span style={{

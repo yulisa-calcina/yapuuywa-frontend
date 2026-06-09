@@ -79,7 +79,7 @@ export default function Dashboard() {
         boxShadow: '0 4px 15px rgba(26,92,42,0.3)',
       }}>
         <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-          <img src="/logo.png" alt="logo" style={{ width:52, height:52, borderRadius:12, objectFit:'contain', background:'rgba(255,255,255,0.15)', padding:4 }}/>
+        
           <div>
             <h1 style={{ fontFamily:"'Sora',sans-serif", fontSize:22, fontWeight:800, color:'#fff', margin:0, letterSpacing:'-0.5px' }}>
               Panel principal
