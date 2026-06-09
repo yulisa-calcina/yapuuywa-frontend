@@ -10,10 +10,14 @@ function RelojTiempoReal() {
   }, [])
   return (
     <p style={{ fontSize:12, color:'rgba(255,255,255,0.7)', margin:0, marginTop:3 }}>
-    YapuUywa SGA · {hora.toLocaleTimeString('es-PE')}
+      🍀 YapuUywa SGA · {hora.toLocaleTimeString('es-PE')}
     </p>
   )
 }
+
+const ico = (emoji) => (
+  <span style={{ filter:'grayscale(100%) brightness(0) invert(1)', fontSize:24 }}>{emoji}</span>
+)
 
 export default function Dashboard() {
   const { kpis } = useDashboard()
@@ -26,42 +30,10 @@ export default function Dashboard() {
   const porcinos = ganado.filter(a => a.especie === 'porcino').length
 
   const kpiData = [
-    {
-      icon: '🐄',
-      label: 'Total animales',
-      val: kpis?.total_animales ?? ganado.length,
-      sub: 'activos en inventario',
-      color: '#1a5c2a',
-      bg: 'linear-gradient(135deg, #eef7f0, #d4edda)',
-      border: '#b8ddc4',
-    },
-    {
-      icon: '🌱',
-      label: 'Hectáreas activas',
-      val: kpis?.hectareas_activas ?? '—',
-      sub: `${kpis?.cultivos_activos ?? 0} cultivos`,
-      color: '#1a5c2a',
-      bg: 'linear-gradient(135deg, #e8f5e8, #c8e6c9)',
-      border: '#a5d6a7',
-    },
-    {
-      icon: '⚠️',
-      label: 'Alertas sanitarias',
-      val: alertas.length,
-      sub: alertas.length > 0 ? 'revisar hoy' : 'sin alertas',
-      color: alertas.length > 0 ? '#7a4f08' : '#1a5c2a',
-      bg: alertas.length > 0 ? 'linear-gradient(135deg, #fef9e7, #fdebd0)' : 'linear-gradient(135deg, #eef7f0, #d4edda)',
-      border: alertas.length > 0 ? '#f9ca8a' : '#b8ddc4',
-    },
-    {
-      icon: '💰',
-      label: 'Balance del mes',
-      val: kpis?.balance_mes != null ? `S/${kpis.balance_mes}` : '—',
-      sub: 'ingresos vs egresos',
-      color: '#1a5c2a',
-      bg: 'linear-gradient(135deg, #e8f5e8, #c8e6c9)',
-      border: '#a5d6a7',
-    },
+    { emoji:'🐄', label:'Total animales',     val: kpis?.total_animales ?? ganado.length, sub:'activos en inventario', color:'#1a5c2a', bg:'linear-gradient(135deg, #eef7f0, #d4edda)', border:'#b8ddc4' },
+    { emoji:'🌱', label:'Hectáreas activas',  val: kpis?.hectareas_activas ?? '—',        sub:`${kpis?.cultivos_activos ?? 0} cultivos`, color:'#1a5c2a', bg:'linear-gradient(135deg, #e8f5e8, #c8e6c9)', border:'#a5d6a7' },
+    { emoji:'⚠️', label:'Alertas sanitarias', val: alertas.length,                        sub: alertas.length > 0 ? 'revisar hoy' : 'sin alertas', color: alertas.length > 0 ? '#7a4f08' : '#1a5c2a', bg: alertas.length > 0 ? 'linear-gradient(135deg, #fef9e7, #fdebd0)' : 'linear-gradient(135deg, #eef7f0, #d4edda)', border: alertas.length > 0 ? '#f9ca8a' : '#b8ddc4' },
+    { emoji:'💰', label:'Balance del mes',    val: kpis?.balance_mes != null ? `S/${kpis.balance_mes}` : '—', sub:'ingresos vs egresos', color:'#1a5c2a', bg:'linear-gradient(135deg, #e8f5e8, #c8e6c9)', border:'#a5d6a7' },
   ]
 
   return (
@@ -79,7 +51,6 @@ export default function Dashboard() {
         boxShadow: '0 4px 15px rgba(26,92,42,0.3)',
       }}>
         <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-        
           <div>
             <h1 style={{ fontFamily:"'Sora',sans-serif", fontSize:22, fontWeight:800, color:'#fff', margin:0, letterSpacing:'-0.5px' }}>
               Panel principal
@@ -88,9 +59,9 @@ export default function Dashboard() {
           </div>
         </div>
         <div style={{ display:'flex', gap:8 }}>
-          {[['🐄','Ganadería'],['🌾','Cultivos'],['📊','Gestión']].map(([ico,lbl]) => (
+          {[['🐄','Ganadería'],['🌾','Cultivos'],['📊','Gestión']].map(([e,lbl]) => (
             <div key={lbl} style={{ background:'rgba(255,255,255,0.15)', borderRadius:10, padding:'8px 14px', textAlign:'center' }}>
-              <div style={{ fontSize:18 }}>{ico}</div>
+              <div style={{ filter:'grayscale(100%) brightness(0) invert(1)', fontSize:18 }}>{e}</div>
               <div style={{ fontSize:9, color:'rgba(255,255,255,0.7)', marginTop:2 }}>{lbl}</div>
             </div>
           ))}
@@ -112,7 +83,7 @@ export default function Dashboard() {
           onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 8px 20px rgba(0,0,0,0.12)' }}
           onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 2px 10px rgba(0,0,0,0.06)' }}
           >
-            <div style={{ fontSize:28, marginBottom:10 }}>{m.icon}</div>
+            <div style={{ marginBottom:10 }}>{ico(m.emoji)}</div>
             <div style={{ fontSize:11, color:'#6a8a6a', fontWeight:600, marginBottom:6, textTransform:'uppercase', letterSpacing:'0.06em' }}>{m.label}</div>
             <div style={{ fontFamily:"'Sora',sans-serif", fontSize:32, fontWeight:800, color:'#1a3a1a', lineHeight:1 }}>{m.val}</div>
             <div style={{ fontSize:12, fontWeight:600, color:m.color, marginTop:6 }}>{m.sub}</div>
@@ -126,7 +97,9 @@ export default function Dashboard() {
         {/* ALERTAS */}
         <div style={{ background:'#fff', border:'1px solid #dde3dd', borderRadius:16, overflow:'hidden', boxShadow:'0 2px 10px rgba(0,0,0,0.05)' }}>
           <div style={{ padding:'14px 16px', borderBottom:'1px solid #eef1ee', display:'flex', alignItems:'center', justifyContent:'space-between', background:'linear-gradient(135deg,#f0f9f0,#fff)' }}>
-            <div style={{ fontSize:14, fontWeight:700, color:'#1a3a1a' }}>🔔 Alertas activas</div>
+            <div style={{ fontSize:14, fontWeight:700, color:'#1a3a1a', display:'flex', alignItems:'center', gap:6 }}>
+              <span style={{ filter:'grayscale(100%)', fontSize:16 }}>🔔</span> Alertas activas
+            </div>
             {alertas.length > 0 ? <Badge color="red">{alertas.length} urgentes</Badge> : <Badge color="green">Sin alertas</Badge>}
           </div>
           {alertas.length === 0
@@ -134,7 +107,7 @@ export default function Dashboard() {
             : alertas.map(a => (
               <div key={a.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid #eef1ee' }}>
                 <div style={{ width:36, height:36, borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, fontSize:18, background:a.estado==='critico'?'#fde8ea':'#fef3dc' }}>
-                  {a.tipo==='stock'?'📦':a.estado==='critico'?'🚨':'⏰'}
+                  <span style={{ filter:'grayscale(100%)' }}>{a.tipo==='stock'?'📦':a.estado==='critico'?'🚨':'⏰'}</span>
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
                   <div style={{ fontSize:13, fontWeight:600, color:'#1e2e1e', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{a.descripcion||a.animal?.nombre}</div>
@@ -150,7 +123,9 @@ export default function Dashboard() {
         {/* GANADO POR ESPECIE */}
         <div style={{ background:'#fff', border:'1px solid #dde3dd', borderRadius:16, overflow:'hidden', boxShadow:'0 2px 10px rgba(0,0,0,0.05)' }}>
           <div style={{ padding:'14px 16px', borderBottom:'1px solid #eef1ee', display:'flex', alignItems:'center', justifyContent:'space-between', background:'linear-gradient(135deg,#f0f9f0,#fff)' }}>
-            <div style={{ fontSize:14, fontWeight:700, color:'#1a3a1a' }}>🐄 Ganado por especie</div>
+            <div style={{ fontSize:14, fontWeight:700, color:'#1a3a1a', display:'flex', alignItems:'center', gap:6 }}>
+              <span style={{ filter:'grayscale(100%)' }}>🐄</span> Ganado por especie
+            </div>
             <a href="/ganado" style={{ fontSize:12, color:'#1a5c2a', textDecoration:'none', fontWeight:600, padding:'5px 12px', background:'#eef7f0', borderRadius:20 }}>Ver todos →</a>
           </div>
           {[
@@ -160,7 +135,9 @@ export default function Dashboard() {
             { ico:'🐷', name:'Porcino', det:'Yorkshire / Cruce',   cnt:porcinos, c:'#db2777' },
           ].map(sp => (
             <div key={sp.name} style={{ display:'flex', alignItems:'center', gap:12, padding:'13px 16px', borderBottom:'1px solid #eef1ee' }}>
-              <div style={{ fontSize:28, flexShrink:0, width:44, height:44, background:'#f0f9f0', borderRadius:12, display:'flex', alignItems:'center', justifyContent:'center' }}>{sp.ico}</div>
+              <div style={{ flexShrink:0, width:44, height:44, background:'#f0f9f0', borderRadius:12, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <span style={{ filter:'grayscale(100%)', fontSize:24 }}>{sp.ico}</span>
+              </div>
               <div style={{ flex:1 }}>
                 <div style={{ fontSize:14, fontWeight:700, color:'#1e2e1e' }}>{sp.name}</div>
                 <div style={{ fontSize:11, color:'#8d9e8d', marginTop:2 }}>{sp.det}</div>
