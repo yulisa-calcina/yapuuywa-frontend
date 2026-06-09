@@ -10,7 +10,7 @@ function RelojTiempoReal() {
   }, [])
   return (
     <p style={{ fontSize:12, color:'rgba(255,255,255,0.7)', margin:0, marginTop:3 }}>
-      🍀 YapuUywa SGA · {hora.toLocaleTimeString('es-PE')}
+    YapuUywa SGA · {hora.toLocaleTimeString('es-PE')}
     </p>
   )
 }

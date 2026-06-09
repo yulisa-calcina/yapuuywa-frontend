@@ -3,7 +3,7 @@ import { useToast } from '../../hooks/index'
 import { Modal, Button, Badge, FormGroup, Input, Select, EmptyState, Toast } from '../../components/ui/index'
 import apiClient from '../../api/axiosConfig'
 
-const FORM0 = { nombre:'', dni:'', email:'', rol:'ganadero', password:'' }
+const FORM0 = { nombre:'', dni:'', email:'', rol:'ganadero', password:'', telefono:'', comunidad:'' }
 
 const S = {
   hdr:   { display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:20 },
@@ -42,13 +42,17 @@ export default function UsuarioList() {
 
   useEffect(() => { load() }, [])
 
-  const admins     = usuarios.filter(u => u.rol === 'admin').length
-  const ganaderos  = usuarios.filter(u => u.rol === 'ganadero').length
-  const vets       = usuarios.filter(u => u.rol === 'veterinario').length
+  const admins    = usuarios.filter(u => u.rol === 'admin').length
+  const ganaderos = usuarios.filter(u => u.rol === 'ganadero').length
+  const vets      = usuarios.filter(u => u.rol === 'veterinario').length
 
   const openCreate = () => { setEditing(null); setForm(FORM0); setModal(true) }
-  const openEdit   = (u) => { setEditing(u); setForm({ nombre:u.nombre, dni:u.dni, email:u.email, rol:u.rol, password:'' }); setModal(true) }
-  const setField   = k   => e => setForm(f => ({ ...f, [k]: e.target.value }))
+  const openEdit   = (u) => {
+    setEditing(u)
+    setForm({ nombre:u.nombre, dni:u.dni, email:u.email, rol:u.rol, password:'', telefono:u.telefono||'', comunidad:u.comunidad||'' })
+    setModal(true)
+  }
+  const setField = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
   const handleSave = async (e) => {
     e.preventDefault()
@@ -70,11 +74,8 @@ export default function UsuarioList() {
 
   const handleDelete = async (id) => {
     if (!confirm('¿Eliminar este usuario?')) return
-    try {
-      await apiClient.delete(`/usuarios/${id}`)
-      show('Usuario eliminado')
-      load()
-    } catch (_) { show('Error al eliminar', 'error') }
+    try { await apiClient.delete(`/usuarios/${id}`); show('Usuario eliminado'); load() }
+    catch (_) { show('Error al eliminar', 'error') }
   }
 
   const toggleActivo = async (u) => {
@@ -111,16 +112,17 @@ export default function UsuarioList() {
         <div style={{overflowX:'auto'}}>
           <table style={S.table}>
             <thead>
-              <tr>{['Nombre','DNI','Email','Rol','Estado','Acciones'].map(h=><th key={h} style={S.th}>{h}</th>)}</tr>
+              <tr>{['Nombre','DNI','Teléfono','Comunidad','Rol','Estado','Acciones'].map(h=><th key={h} style={S.th}>{h}</th>)}</tr>
             </thead>
             <tbody>
               {usuarios.length===0
-                ? <tr><td colSpan={6}><EmptyState icon="👤" title="Sin usuarios" description="Crea el primer usuario del sistema."/></td></tr>
+                ? <tr><td colSpan={7}><EmptyState icon="👤" title="Sin usuarios" description="Crea el primer usuario del sistema."/></td></tr>
                 : usuarios.map(u=>(
                   <tr key={u.id}>
                     <td style={S.td}><strong>{u.nombre}</strong></td>
                     <td style={S.td}>{u.dni}</td>
-                    <td style={S.td}>{u.email}</td>
+                    <td style={S.td}>{u.telefono || <span style={{color:'#ccc'}}>—</span>}</td>
+                    <td style={S.td}>{u.comunidad || <span style={{color:'#ccc'}}>—</span>}</td>
                     <td style={S.td}><Badge color={rolColor(u.rol)}>{u.rol}</Badge></td>
                     <td style={S.td}>
                       <button
@@ -159,6 +161,14 @@ export default function UsuarioList() {
                 <option value="ganadero">Ganadero / Agricultor</option>
                 <option value="veterinario">Veterinario / Técnico</option>
               </Select>
+            </FormGroup>
+          </div>
+          <div style={S.row2}>
+            <FormGroup label="Teléfono">
+              <Input placeholder="Ej: 987654321" value={form.telefono} onChange={setField('telefono')}/>
+            </FormGroup>
+            <FormGroup label="Comunidad">
+              <Input placeholder="Ej: Azángaro" value={form.comunidad} onChange={setField('comunidad')}/>
             </FormGroup>
           </div>
           <FormGroup label="Correo electrónico" required>
