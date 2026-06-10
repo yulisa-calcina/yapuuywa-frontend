@@ -13,7 +13,7 @@ import ReportesPage   from './pages/reportes/Reportes'
 import ParcelaList    from './pages/parcelas/ParcelaList'
 import ProduccionPage from './pages/produccion/Produccion'
 import CultivosPage   from './pages/cultivos/Cultivos'
-import { Alertas } from './pages/Placeholders'
+import AlertasPage from './pages/alertas/Alertas'
 
 function PrivateRoute({ children }) {
   const { isAuth } = useAuth()
@@ -37,7 +37,7 @@ function AppRoutes() {
         <Route path="finanzas"   element={<FinanzasPage />} />
         <Route path="reportes"   element={<ReportesPage />} />
         <Route path="usuarios"   element={<UsuarioList />} />
-        <Route path="alertas"    element={<Alertas />} />
+        <Route path="alertas" element={<AlertasPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
